@@ -30,7 +30,7 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
     }
     
     private boolean isUseExample() {
-    	return "true".equals(getProperties().getProperty("useExample"));
+    	return "true".equals(properties.getProperty("useExample"));
 	}
 
     @Override
@@ -93,9 +93,7 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean clientGenerated(Interface interfaze,
-                                   TopLevelClass topLevelClass,
-                                   IntrospectedTable introspectedTable) {
+    public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
         interfaze.addJavaDocLine("/**");
         interfaze.addJavaDocLine(" * " + interfaze.getType().getShortName() + "继承基类");
         interfaze.addJavaDocLine(" */");
@@ -273,21 +271,23 @@ public class CommonDAOInterfacePlugin extends PluginAdapter {
         return false;
     }
 
-    @Override
-    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        if (isUseExample()) {
-			interceptModelAndExampleParam(method);
-		}
-        return false;
-    }
+    //    @Override
+    //    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
+    //    IntrospectedTable introspectedTable) {
+    //        if (isUseExample()) {
+    //			interceptModelAndExampleParam(method);
+    //		}
+    //        return false;
+    //    }
 
-    @Override
-    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        if (isUseExample()) {
-			interceptModelAndExampleParam(method);
-		}
-        return false;
-    }
+    //    @Override
+    //    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method, TopLevelClass topLevelClass,
+    //    IntrospectedTable introspectedTable) {
+    //        if (isUseExample()) {
+    //			interceptModelAndExampleParam(method);
+    //		}
+    //        return false;
+    //    }
 
     @Override
     public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,

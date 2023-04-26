@@ -21,8 +21,10 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.internal.util.StringUtility;
 
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -46,7 +48,7 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
         properties = new Properties();
     }
 
-
+    @Override
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         // add no file level comments by default
         if (isAnnotations) {
@@ -62,9 +64,11 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
      * Adds a suitable comment to warn users that the element was generated, and
      * when it was generated.
      */
+    @Override
     public void addComment(XmlElement xmlElement) {
     }
 
+    @Override
     public void addRootComment(XmlElement rootElement) {
         // add no document level comments by default
         return;
@@ -95,6 +99,7 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 	public void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable, Set<FullyQualifiedJavaType> set) {
 	}
 
+    @Override
 	public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
         columnRemarks = isTrue(properties
@@ -103,10 +108,12 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
                 .getProperty("annotations"));
     }
 
+    @Override
     public void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable) {
     }
 
+    @Override
     public void addModelClassComment(TopLevelClass topLevelClass,
                                 IntrospectedTable introspectedTable) {
         topLevelClass.addJavaDocLine("/**");
@@ -118,10 +125,12 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
         }
     }
 
+    @Override
     public void addEnumComment(InnerEnum innerEnum,
             IntrospectedTable introspectedTable) {
     }
 
+    @Override
     public void addFieldComment(Field field,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
@@ -148,34 +157,40 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
                 field.addAnnotation("@NotEmpty");
             }
             if (introspectedColumn.isIdentity()) {
-                if (introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement().equals("JDBC")) {
+                Optional<GeneratedKey> generatedKey = introspectedTable.getTableConfiguration().getGeneratedKey();
+                if (generatedKey.isPresent() && generatedKey.get().getRuntimeSqlStatement().equals("JDBC")) {
                     field.addAnnotation("@GeneratedValue(generator = \"JDBC\")");
                 } else {
                     field.addAnnotation("@GeneratedValue(strategy = GenerationType.IDENTITY)");
                 }
             } else if (introspectedColumn.isSequenceColumn()) {
-                field.addAnnotation("@SequenceGenerator(name=\"\",sequenceName=\"" + introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement() + "\")");
+                field.addAnnotation("@SequenceGenerator(name=\"\",sequenceName=\"" + introspectedTable.getTableConfiguration().getGeneratedKey().get().getRuntimeSqlStatement() + "\")");
             }
         }
     }
 
+    @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
     }
 
+    @Override
     public void addGeneralMethodComment(Method method,
             IntrospectedTable introspectedTable) {
     }
 
+    @Override
     public void addGetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
     }
 
+    @Override
     public void addSetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
     }
 
+    @Override
     public void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
         innerClass.addJavaDocLine("/**"); //$NON-NLS-1$

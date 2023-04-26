@@ -54,8 +54,12 @@ public class ConfigHelper {
 				fos.write(buffer, 0, byteread);
 			}
 		} finally {
-			if (fis != null) fis.close();
-			if (fos != null) fos.close();
+			if (fis != null) {
+				fis.close();
+			}
+			if (fos != null) {
+				fos.close();
+			}
 		}
 
 	}
@@ -79,9 +83,15 @@ public class ConfigHelper {
 
 			return configs;
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null) {
+				rs.close();
+			}
+			if (stat != null) {
+				stat.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
@@ -108,9 +118,15 @@ public class ConfigHelper {
 			}
 			stat.executeUpdate(sql);
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null) {
+				rs.close();
+			}
+			if (stat != null) {
+				stat.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
@@ -124,9 +140,15 @@ public class ConfigHelper {
 			String sql = String.format("delete from dbs where id=%d", databaseConfig.getId());
 			stat.executeUpdate(sql);
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null) {
+				rs.close();
+			}
+			if (stat != null) {
+				stat.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
@@ -142,9 +164,15 @@ public class ConfigHelper {
 					jsonStr);
 			stat.executeUpdate(sql);
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null) {
+				rs.close();
+			}
+			if (stat != null) {
+				stat.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
@@ -165,9 +193,15 @@ public class ConfigHelper {
 			}
 			return generatorConfig;
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null) {
+				rs.close();
+			}
+			if (stat != null) {
+				stat.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
@@ -188,9 +222,15 @@ public class ConfigHelper {
 			}
 			return configs;
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null) {
+				rs.close();
+			}
+			if (stat != null) {
+				stat.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
@@ -204,8 +244,12 @@ public class ConfigHelper {
 			_LOG.info("sql: {}", sql);
 			return stat.executeUpdate(sql);
 		} finally {
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (stat != null) {
+				stat.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
